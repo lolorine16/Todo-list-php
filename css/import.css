@@ -1,0 +1,143 @@
+/* Base styles */
+body {
+    font-family: 'Itim', sans-serif;
+    background-color: #eff0d1;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+
+.container {
+    /*max-width: 1280px;*/
+    width: 100%;
+    padding: 2rem;
+    position: relative;
+}
+
+
+.logo {
+    height: 54px;
+    object-fit: cover;
+}
+
+.close-btn {
+    position: absolute;
+    top: 2rem;
+    right: 1.5rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.close-btn img {
+    width: 45px;
+    height: 45px;
+}
+
+
+
+/* Modal */
+.modal {
+
+    background-color: #d33f49;
+    border-radius: 10px;
+    overflow: hidden;
+    width: 900px;
+    margin: 2rem auto;
+}
+
+h2 {
+    color: white;
+    font-size: 40px;
+    text-align: center;
+    margin-top: 40px;
+}
+
+h3 {
+    margin-top: 10px;
+    color: #d33f49;
+    text-align: center;
+    font-size: 32px;
+    margin-bottom: 30px;
+}
+
+.card {
+    background-color: white;
+    border-radius: 30px;
+    width: 800px;
+    height: 500px;
+    margin: 77px auto;
+    margin-top: 20px;
+    padding: 20px;
+}
+
+
+
+
+/* Task container */
+.imp-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 32px;
+    border: 5px solid #d33f49;
+    height: 300px;
+    border-radius: 50px;
+    width: 693px;
+    margin-left: 50px;
+}
+
+.import {
+    font-size: 20px;
+    color: black;
+    white-space: pre-line;
+    height: 265px;
+    width: 612px;
+    display: flex;
+}
+
+
+.upload-btn{
+    background-color: #d33f49;
+    color: white;
+    border: none;
+    border-radius: 30px;
+    height: 45;
+    width: 169;
+    font-family: 'Itim', sans-serif;
+    font-size: 24px;
+    cursor: pointer;
+    display: flex;
+    margin-left: 235px ;
+    margin-top: 50px;
+    padding: 10px;
+    
+}
+.upload-btn:hover {
+    background-color: #922a31;
+}
+.import-icon{
+    width: 31;
+    height: 28;
+    margin-left: 26;
+    margin-top: 9;
+}
+.input-import{
+    background-color: #d33f49;
+    color: white;
+    border: none;
+    border-radius: 30px;
+    height: 45;
+    width: 169;
+    font-family: 'Itim', sans-serif;
+    font-size: 24px;
+    cursor: pointer;
+    display: flex;
+    margin-left: 90px ;
+    margin-top: 50px;
+    padding: 10px;
+}

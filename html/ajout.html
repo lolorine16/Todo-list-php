@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="/assets/logo/logo-favicon.png" type="image/x-icon">
+    <title>Nouvelle Tache</title>
+    <link href="https://fonts.googleapis.com/css?family=Itim:400" rel="stylesheet">
+    <link rel="stylesheet" href="/css/ajout.css">
+</head>
+<body>
+    <div class="container">
+        <img class="logo" src="/assets/logo/logo-icon-light-transparent.png" alt="Logo light">
+        <a href="/index.html">
+            <button class="close-btn">
+                <img src="/assets/icons/Close.png" alt="Close">
+            </button>
+        </a>
+        <div class="modal">
+            <h2>Nouvelle Tache</h2>
+            <div class="card">
+                <div class="input-group">
+                    <h3>Nom de la tache</h3>
+                    <input type="text" id="taskName">
+                </div>
+                <div class="input-group">
+                    <h3>Statut</h3>
+                    <div class="status-group">
+                        <label class="status-item">
+                            <input type="radio" name="status" value="urgent">
+                            <span class="radio-button"></span>
+                            <span>URGENT</span>
+                        </label>
+                        <label class="status-item">
+                            <input type="radio" name="status" value="important">
+                            <span class="radio-button"></span>
+                            <span>IMPORTANT</span>
+                        </label>
+                        <label class="status-item">
+                            <input type="radio" name="status" value="apres">
+                            <span class="radio-button"></span>
+                            <span>APRÈS</span>
+                        </label>
+                    </div>
+                </div>
+                <button class="add-btn">Ajouter</button>
+            </div>
+        </div>
+    </div>
+    <script src="/js/ajout.js"></script>
+</body>
+</html>

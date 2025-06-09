@@ -1,0 +1,121 @@
+/* Base styles */
+body {
+    font-family: 'Itim', sans-serif;
+    background-color: #eff0d1;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+
+.container {
+    /*max-width: 1280px;*/
+    width: 100%;
+    padding: 2rem;
+    position: relative;
+}
+
+
+.logo {
+    height: 54px;
+    object-fit: cover;
+}
+
+.close-btn {
+    position: absolute;
+    top: 2rem;
+    right: 1.5rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.close-btn img {
+    width: 45px;
+    height: 45px;
+}
+
+
+
+/* Modal */
+.modal {
+
+    background-color: #d7c0d0;
+    border-radius: 10px;
+    overflow: hidden;
+    width: 900px;
+    margin: 2rem auto;
+}
+
+h2 {
+    color: white;
+    font-size: 40px;
+    text-align: center;
+    margin-top: 40px;
+}
+
+h3 {
+    margin-top: 10px;
+    color: #d7c0d0;
+    text-align: center;
+    font-size: 32px;
+    margin-bottom: 30px;
+}
+
+.card {
+    background-color: white;
+    border-radius: 30px;
+    width: 800px;
+    height: 500px;
+    margin: 77px auto;
+    margin-top: 20px;
+    padding: 20px;
+}
+
+
+
+
+/* Task container */
+.task-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 32px;
+    border: 5px solid #d7c0d0;
+    height: 300px;
+    border-radius: 50px;
+    width: 693px;
+    margin-left: 50px;
+}
+
+.task-list {
+    font-size: 20px;
+    color: black;
+    white-space: pre-line;
+    height: 265px;
+    width: 612px;
+}
+
+.export-btn {
+    background-color: #d7c0d0;
+    color: white;
+    border: none;
+    border-radius: 30px;
+    height: 70px;
+    width: 187px;
+    font-family: 'Itim', sans-serif;
+    font-size: 24px;
+    cursor: pointer;
+    display: block;
+    /*margin: 2rem auto 0;*/
+    margin: auto;
+    margin-top: 50px;
+}
+
+.export-btn:hover {
+    background-color: #c2a2b8;
+}
+

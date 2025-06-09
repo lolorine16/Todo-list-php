@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="/assets/logo/logo-favicon.png" type="image/x-icon">
+    <title>TODO List</title>
+    <link href="https://fonts.googleapis.com/css?family=Itim:400" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <main>
+        <header>
+            <img src="assets/logo/logo-light-transparent.png" alt="Logo light" class="logo">
+            
+            <div class="search-container">
+                <input type="text" id="searchInput" placeholder="Rechercher todos...">
+                <img src="assets/icons/Search.png" alt="Search" class="search-icon">
+            </div>
+
+            <div class="action-buttons">
+                <a href="/html/ajout.html"><img src="assets/icons/Add List.png" alt="Add" class="action-icon" href="#ajout"></a>
+                <a href="/html/import.html"><img src="assets/icons/Sign In.png" alt="Sign In" class="action-icon"></a>
+                <a href="/html/export.html"><img src="assets/icons/Share.png" alt="Share" class="action-icon"></a>
+            </div>
+        </header>
+
+        <div class="columns-container">
+            <div class="column urgent">
+                <h2>URGENT</h2>
+                <div class="card">
+                    <input type="text" class="todo-input" placeholder="Ajouter todo...">
+                    <div class="todos-list"></div>
+                </div>
+            </div>
+
+            <div class="column important">
+                <h2>IMPORTANT</h2>
+                <div class="card">
+                    <input type="text" class="todo-input" placeholder="Ajouter todo...">
+                    <div class="todos-list"></div>
+                </div>
+            </div>
+
+            <div class="column apres">
+                <h2>APRÉS</h2>
+                <div class="card">
+                    <input type="text" class="todo-input" placeholder="Ajouter todo...">
+                    <div class="todos-list"></div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <script src="/js/script.js"></script>
+</body>
+</html>

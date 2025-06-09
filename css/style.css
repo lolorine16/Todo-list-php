@@ -1,0 +1,196 @@
+
+/*########## Page Acceuil #############*/
+
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Itim', sans-serif;
+}
+
+body {
+    background-color: #eff0d1;
+}
+
+main {
+    /*max-width: 1280px;
+    height: 832px;
+    margin: 0 auto;*/
+    position: relative;
+}
+
+header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 36px 24px;
+}
+
+.logo {
+    width: 179px;
+    height: 54px;
+    object-fit: cover;
+}
+
+.search-container {
+    position: relative;
+    width: 525px;
+}
+
+#searchInput {
+    width: 100%;
+    height: 53px;
+    padding-left: 56px;
+    border-radius: 30px;
+    border: 1px solid #e2e8f0;
+    font-size: 16px;
+}
+
+.search-icon {
+    position: absolute;
+    width: 45px;
+    height: 45px;
+    top: 4px;
+    left: 14px;
+}
+
+.action-buttons {
+    display: flex;
+    gap: 16px;
+}
+
+.action-icon {
+    width: 45px;
+    height: 45px;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.action-icon:hover {
+    transform: scale(1.1);
+}
+
+.columns-container {
+    margin-left: 60px;
+    display: flex;
+    gap: 50px;
+    position: absolute;
+    top: 147px;
+    left: -10px;
+}
+
+.column {
+    width: 570px;
+    height: 800px;
+    border-radius: 10px;
+    overflow: hidden;
+    position: relative;
+}
+
+.column.urgent {
+    background-color: #d33f49;
+}
+
+.column.important {
+    background-color: #d7c0d0;
+}
+
+.column.apres {
+    background-color: #77ba99;
+}
+
+.column h2 {
+    position: absolute;
+    top: 5px;
+    color: white;
+    font-size: 3rem;
+    font-weight: normal;
+}
+
+.urgent h2 { left: 180px; }
+.important h2 { left: 150px; }
+.apres h2 { left: 200px; }
+
+.card {
+    position: absolute;
+    width: 450px;
+    height: 700px;
+    top: 78px;
+    left: 60px;
+    background: white;
+    border-radius: 30px;
+    padding: 16px;
+    overflow-y: auto;
+}
+
+.todo-input {
+    width: 100%;
+    padding: 8px 12px;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    margin-bottom: 16px;
+    font-size: 16px;
+}
+
+.todos-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.todo-item {
+    padding: 12px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.2s;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.todo-item:hover {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+}
+
+.todo-buttons {
+    display: flex;
+    gap: 8px;
+}
+
+.edit-btn, .delete-btn {
+    border: none;
+    background: none;
+    cursor: pointer;
+    font-size: 18px;
+    padding: 4px 8px;
+    border-radius: 4px;
+    transition: background-color 0.2s;
+}
+
+.edit-btn {
+    color: #77BA99;
+}
+
+.edit-btn:hover {
+    background-color: #e2e8f0;
+}
+
+.delete-btn {
+    color: #d33f49;
+}
+
+.delete-btn:hover {
+    background-color: #fee2e2;
+}
+
+.edit-input {
+    width: 100%;
+    padding: 4px 8px;
+    border: 1px solid #e2e8f0;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+/*########## Page Ajouter #############*/

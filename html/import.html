@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="/assets/logo/logo-favicon.png" type="image/x-icon">
+    <title>Importer</title>
+    <link href="https://fonts.googleapis.com/css?family=Itim:400" rel="stylesheet">
+    <link rel="stylesheet" href="/css/import.css">
+</head>
+<body>
+    <div class="container">
+    
+        <img src="/assets/logo/logo-icon-light-transparent.png" alt="logo light" class="logo">
+        <button class="close-btn" id="closeBtn">
+            <img src="/assets/icons/Close.png" alt="close">
+        </button>
+        
+    
+
+        <section class="modal">
+            <h2>Importer</h2>
+            <div class="card">
+                <h3>Voulez vous importer vos taches depuis un fichier .xml !?</h3>
+                <section class="imp-container">
+                    <div class="import">
+                        <form id="importForm" enctype="multipart/form-data" method="POST" action="http://localhost:8003/php/import.php">
+                            <input class="input-import"  type="file" name="xmlFile" accept=".xml" required>
+                            <button type="submit" class="upload-btn" id="importBtn">
+                                <img src="/assets/icons/Import.png" class="import-icon">Importer
+                            </button>
+                            
+                        </form>                        
+                    </div>
+                </section>
+                
+            </a>
+        </section>
+    </div>
+    <script src="/js/import.js"></script>
+</body>
+</html>
