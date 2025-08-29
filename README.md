@@ -98,6 +98,8 @@ http://localhost:8003/index.html
 
 # Les Choses a améliorer
 
-- [ ] Modifier le statut des taches avec la fonctionnalité **Drag**
+- [x] Modifier le statut des taches avec la fonctionnalité **Drag**
 
-- [ ] Modifier les statut de certaines taches **immédiatement avec AJAX**
+- [x] Modifier les statut de certaines taches **immédiatement avec AJAX**
+
+
