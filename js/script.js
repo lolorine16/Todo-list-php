@@ -124,7 +124,112 @@ document.addEventListener('DOMContentLoaded', () => {
                 todoElement.appendChild(span);
                 todoElement.appendChild(buttonsDiv);
 
+                // Configurer le drag & drop pour cet élément
+                setupDragAndDrop(todoElement, tache.id);
+
                 todosLists[columnIndex].appendChild(todoElement);
+
+                // ===== FONCTIONNALITÉ DRAG & DROP =====
+
+                // Fonction pour changer le statut d'une tâche
+                function changeTaskStatus(taskId, newStatus) {
+                    fetch('http://localhost:8003/php/change_status.php', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ id: taskId, statut: newStatus })
+                    })
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data.success) {
+                            // Animation de succès
+                            loadTodos();
+                        } else {
+                            alert("Erreur changement de statut : " + data.error);
+                            loadTodos();
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Erreur:', error);
+                        alert("Erreur de connexion lors du changement de statut");
+                        loadTodos();
+                    });
+                }
+
+                // Fonction pour configurer le drag & drop sur un élément todo
+                function setupDragAndDrop(todoElement, taskId) {
+                    todoElement.draggable = true;
+                    todoElement.dataset.taskId = taskId;
+
+                    // Événements de drag
+                    todoElement.addEventListener('dragstart', (e) => {
+                        todoElement.classList.add('dragging');
+                        e.dataTransfer.setData('text/plain', taskId);
+                        e.dataTransfer.effectAllowed = 'move';
+                        
+                        // Ajouter des indicateurs visuels aux zones de drop
+                        document.querySelectorAll('.column').forEach(col => {
+                            col.classList.add('valid-drop-target');
+                        });
+                    });
+
+                    todoElement.addEventListener('dragend', () => {
+                        todoElement.classList.remove('dragging');
+                        
+                        // Retirer les indicateurs visuels
+                        document.querySelectorAll('.column').forEach(col => {
+                            col.classList.remove('valid-drop-target');
+                        });
+                        document.querySelectorAll('.todos-list').forEach(list => {
+                            list.classList.remove('drag-over');
+                        });
+                    });
+                }
+
+                // Configuration des zones de drop
+                function setupDropZones() {
+                    todosLists.forEach((todosList, columnIndex) => {
+                        const statut = statutMap[columnIndex];
+
+                        todosList.addEventListener('dragover', (e) => {
+                            e.preventDefault();
+                            todosList.classList.add('drag-over');
+                            e.dataTransfer.dropEffect = 'move';
+                        });
+
+                        todosList.addEventListener('dragleave', (e) => {
+                            // Vérifier si on quitte vraiment la zone (pas un enfant)
+                            if (!todosList.contains(e.relatedTarget)) {
+                                todosList.classList.remove('drag-over');
+                            }
+                        });
+
+                        todosList.addEventListener('drop', (e) => {
+                            e.preventDefault();
+                            todosList.classList.remove('drag-over');
+                            
+                            const taskId = e.dataTransfer.getData('text/plain');
+                            const draggedElement = document.querySelector(`[data-task-id="${taskId}"]`);
+                            
+                            if (draggedElement && taskId) {
+                                // Ajouter animation de feedback
+                                draggedElement.classList.add('drop-feedback');
+                                
+                                // Changer le statut dans la base de données
+                                changeTaskStatus(parseInt(taskId), statut);
+                                
+                                // Retirer l'animation après un délai
+                                setTimeout(() => {
+                                    draggedElement.classList.remove('drop-feedback');
+                                }, 600);
+                            }
+                        });
+                    });
+                }
+
+                // Initialiser les zones de drop
+                setupDropZones();
+
+                setupDragAndDrop(todoElement, tache.id);
             });
         });
     }

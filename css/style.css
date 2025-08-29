@@ -1,4 +1,3 @@
-
 /*########## Page Acceuil #############*/
 
 
@@ -148,10 +147,19 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    cursor: grab;
+    user-select: none;
 }
 
 .todo-item:hover {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+}
+
+.todo-item.dragging {
+    opacity: 0.5;
+    transform: rotate(5deg);
+    cursor: grabbing;
+    z-index: 1000;
 }
 
 .todo-buttons {
@@ -191,6 +199,57 @@ header {
     border: 1px solid #e2e8f0;
     border-radius: 4px;
     font-size: 16px;
+}
+
+/* ===== DRAG & DROP STYLES ===== */
+
+/* Styles pour les éléments draggables */
+/*...existing code...*/
+.todo-item {
+    /* ...existing code... */
+    cursor: grab;
+    user-select: none;
+}
+
+.todo-item.dragging {
+    opacity: 0.5;
+    transform: rotate(5deg);
+    cursor: grabbing;
+    z-index: 1000;
+}
+
+/* Styles pour les zones de drop */
+.todos-list {
+    min-height: 100px;
+    transition: background-color 0.3s ease;
+}
+
+.todos-list.drag-over {
+    background-color: #e8f5e8;
+    border: 2px dashed #77BA99;
+    border-radius: 8px;
+}
+
+/* Animation de feedback visuel */
+.todo-item.drop-feedback {
+    animation: dropSuccess 0.6s ease;
+}
+
+@keyframes dropSuccess {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); background-color: #d4edda; }
+    100% { transform: scale(1); }
+}
+
+/* Indicateur de zone de drop valide */
+.column.valid-drop-target .card {
+    box-shadow: 0 0 20px rgba(119, 186, 153, 0.3);
+    border: 2px solid #77BA99;
+}
+
+/* Curseur pendant le drag */
+.dragging * {
+    cursor: grabbing !important;
 }
 
 /*########## Page Ajouter #############*/
