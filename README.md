@@ -61,17 +61,28 @@ cd Todo-list-php  #ensuite lancer MySQL
 SOURCE taches.sql
 ```
 
-#### 5. Dernière modification 😆✨✨
+#### 5. Configuration de la base de données 😆✨✨
 
-Modifie le fichier db.php :
+Configurez votre connexion à la base de données :
 
 ```zsh
 cd Todo-list-php/php/
 
+# Copiez le template et renommez-le
+cp db.php.template db.php
+
+# Modifiez le fichier avec vos paramètres
 nano db.php
 ```
 
+**⚠️ Important :** Modifiez les lignes suivantes dans `db.php` avec vos propres paramètres :
+- `$username = "votre_nom_utilisateur";` → votre nom d'utilisateur MySQL
+- `$password = "votre_mot_de_passe";` → votre mot de passe MySQL
+- Ajustez `$host`, `$port` et `$dbname` si nécessaire
+
 ***check et c'est partie*** 🥰❤️✨
+
+> **🔒 Note de sécurité :** Le fichier `db.php` contient vos informations de connexion sensibles. Il est automatiquement ignoré par Git (via `.gitignore`) pour protéger vos données personnelles.
 
 #### 6. Pour finir ❤️✨
 
