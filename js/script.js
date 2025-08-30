@@ -1,17 +1,27 @@
 document.addEventListener('DOMContentLoaded', () => {
     const todoInputs = document.querySelectorAll('.todo-input');
+    const dateInputs = document.querySelectorAll('.date-input');
     const todosLists = document.querySelectorAll('.todos-list');
-    const searchInput = document.getElementById('searchInput'); //  recupere l'input de la recherche
+    const searchInput = document.getElementById('searchInput');
     const statutMap = ['urgent', 'important', 'apres'];
 
-    // fonction quisert ajouter une tache
-    function addTodo(text, columnIndex) {
+    // Fonction qui sert à ajouter une tâche
+    function addTodo(text, columnIndex, dueDate = null) {
         const statut = statutMap[columnIndex];
+
+        const payload = { 
+            contenu: text, 
+            statut: statut 
+        };
+        
+        if (dueDate) {
+            payload.date_echeance = dueDate;
+        }
 
         fetch('http://localhost:8003/php/add.php', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ contenu: text, statut: statut })
+            body: JSON.stringify(payload)
         })
         .then(res => res.json())
         .then(data => {
@@ -40,24 +50,71 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Modifier une tache
-    function editTodo(id, oldText) {
-        const input = document.createElement('input');
-        input.type = 'text';
-        input.value = oldText;
-        input.className = 'edit-input';
+    // Modifier une tâche avec modal
+    function editTodo(id, oldText, oldDate = null) {
+        // Créer l'overlay
+        const overlay = document.createElement('div');
+        overlay.className = 'edit-modal-overlay';
+        
+        // Créer le modal
+        const modal = document.createElement('div');
+        modal.className = 'edit-modal';
+        
+        // Input pour le texte
+        const textInput = document.createElement('input');
+        textInput.type = 'text';
+        textInput.value = oldText;
+        textInput.placeholder = 'Contenu de la tâche';
+        
+        // Input pour la date
+        const dateInput = document.createElement('input');
+        dateInput.type = 'date';
+        dateInput.value = oldDate || '';
+        dateInput.placeholder = 'Date d\'échéance';
+        
+        // Boutons
+        const buttonsDiv = document.createElement('div');
+        buttonsDiv.className = 'edit-modal-buttons';
+        
+        const saveBtn = document.createElement('button');
+        saveBtn.textContent = 'Sauvegarder';
+        saveBtn.className = 'save-btn';
+        
+        const cancelBtn = document.createElement('button');
+        cancelBtn.textContent = 'Annuler';
+        cancelBtn.className = 'cancel-btn';
+        
+        buttonsDiv.appendChild(saveBtn);
+        buttonsDiv.appendChild(cancelBtn);
+        
+        modal.appendChild(textInput);
+        modal.appendChild(dateInput);
+        modal.appendChild(buttonsDiv);
+        
+        document.body.appendChild(overlay);
+        document.body.appendChild(modal);
+        
+        textInput.focus();
 
         const save = () => {
-            const newText = input.value.trim();
-            if (!newText || newText === oldText) {
-                loadTodos();
+            const newText = textInput.value.trim();
+            const newDate = dateInput.value;
+            
+            if (!newText) {
+                closeModal();
                 return;
             }
+
+            const payload = { 
+                id, 
+                contenu: newText,
+                date_echeance: newDate || null
+            };
 
             fetch('http://localhost:8003/php/edit.php', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ id, contenu: newText })
+                body: JSON.stringify(payload)
             })
             .then(res => res.json())
             .then(data => {
@@ -66,15 +123,22 @@ document.addEventListener('DOMContentLoaded', () => {
                 } else {
                     alert("Erreur modification : " + data.error);
                 }
+                closeModal();
             });
         };
 
-        input.addEventListener('keypress', (e) => {
+        const closeModal = () => {
+            document.body.removeChild(overlay);
+            document.body.removeChild(modal);
+        };
+
+        saveBtn.addEventListener('click', save);
+        cancelBtn.addEventListener('click', closeModal);
+        overlay.addEventListener('click', closeModal);
+        
+        textInput.addEventListener('keypress', (e) => {
             if (e.key === 'Enter') save();
         });
-        input.addEventListener('blur', save);
-
-        return input;
     }
 
     // Charger toutes les taches
@@ -95,19 +159,48 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 const todoElement = document.createElement('div');
                 todoElement.className = 'todo-item';
+                
+                // Ajouter les classes CSS selon la date d'échéance
+                const dateStatus = getDateStatus(tache.date_echeance);
+                if (dateStatus) {
+                    todoElement.classList.add(dateStatus);
+                }
+
+                const contentDiv = document.createElement('div');
+                contentDiv.className = 'todo-content';
 
                 const span = document.createElement('span');
                 span.textContent = tache.contenu;
+                contentDiv.appendChild(span);
+
+                // Afficher la date d'échéance si elle existe
+                if (tache.date_echeance) {
+                    const dateDiv = document.createElement('div');
+                    dateDiv.className = 'todo-date';
+                    dateDiv.textContent = formatDate(tache.date_echeance);
+                    
+                    // Ajouter un badge si nécessaire
+                    const badge = createDateBadge(tache.date_echeance);
+                    if (badge) {
+                        dateDiv.appendChild(document.createTextNode(' '));
+                        dateDiv.appendChild(badge);
+                    }
+                    
+                    contentDiv.appendChild(dateDiv);
+                }
+
+                // Badge pour la date d'échéance
+                const dateBadge = createDateBadge(tache.date_echeance);
+                if (dateBadge) {
+                    todoElement.appendChild(dateBadge);
+                }
 
                 // Bouton modifier ~
                 const editBtn = document.createElement('button');
                 editBtn.textContent = '✎';
                 editBtn.className = 'edit-btn';
                 editBtn.onclick = () => {
-                    const input = editTodo(tache.id, tache.contenu);
-                    todoElement.innerHTML = '';
-                    todoElement.appendChild(input);
-                    input.focus();
+                    editTodo(tache.id, tache.contenu, tache.date_echeance);
                 };
 
                 // Bouton supprimer x
@@ -121,7 +214,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 buttonsDiv.appendChild(editBtn);
                 buttonsDiv.appendChild(deleteBtn);
 
-                todoElement.appendChild(span);
+                todoElement.appendChild(contentDiv);
                 todoElement.appendChild(buttonsDiv);
 
                 // Configurer le drag & drop pour cet élément
@@ -234,12 +327,28 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Ajouter une tche avec Enter
+    // Ajouter une tâche avec Enter
     todoInputs.forEach((input, index) => {
-        input.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter' && input.value.trim()) {
-                addTodo(input.value.trim(), index);
+        const dateInput = dateInputs[index];
+        
+        const addTask = () => {
+            if (input.value.trim()) {
+                const dueDate = dateInput.value || null;
+                addTodo(input.value.trim(), index, dueDate);
                 input.value = '';
+                dateInput.value = '';
+            }
+        };
+
+        input.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                addTask();
+            }
+        });
+
+        dateInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                addTask();
             }
         });
     });
@@ -248,4 +357,68 @@ document.addEventListener('DOMContentLoaded', () => {
     searchInput.addEventListener('input', loadTodos);
 
     loadTodos(); // Initialisation
+
+    // ===== FONCTIONS UTILITAIRES POUR LES DATES =====
+
+    function formatDate(dateString) {
+        if (!dateString) return null;
+        const date = new Date(dateString);
+        const today = new Date();
+        const diffTime = date.getTime() - today.getTime();
+        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+        if (diffDays < 0) {
+            return `En retard de ${Math.abs(diffDays)} jour(s)`;
+        } else if (diffDays === 0) {
+            return 'Aujourd\'hui';
+        } else if (diffDays === 1) {
+            return 'Demain';
+        } else if (diffDays <= 7) {
+            return `Dans ${diffDays} jours`;
+        } else {
+            return date.toLocaleDateString('fr-FR');
+        }
+    }
+
+    function getDateStatus(dateString) {
+        if (!dateString) return null;
+        const date = new Date(dateString);
+        const today = new Date();
+        const diffTime = date.getTime() - today.getTime();
+        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+        if (diffDays < 0) {
+            return 'overdue';
+        } else if (diffDays === 0) {
+            return 'due-today';
+        } else if (diffDays <= 3) {
+            return 'due-soon';
+        }
+        return null;
+    }
+
+    function createDateBadge(dateString) {
+        const status = getDateStatus(dateString);
+        if (!status) return null;
+
+        const badge = document.createElement('span');
+        badge.className = 'due-badge';
+        
+        switch (status) {
+            case 'overdue':
+                badge.className += ' overdue';
+                badge.textContent = 'En retard';
+                break;
+            case 'due-today':
+                badge.className += ' today';
+                badge.textContent = 'Aujourd\'hui';
+                break;
+            case 'due-soon':
+                badge.className += ' soon';
+                badge.textContent = 'Bientôt';
+                break;
+        }
+        
+        return badge;
+    }
 });
