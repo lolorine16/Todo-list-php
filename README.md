@@ -71,9 +71,9 @@ cd Todo-list-php/php/
 nano db.php
 ```
 
-***check et c'est partie*** 🥰❤️✨
+***check et c'est partie*** ✨
 
-#### 6. Pour finir ❤️✨
+#### 6. Pour finir ✨
 
 ```zsh
 php -S localhost:8003
